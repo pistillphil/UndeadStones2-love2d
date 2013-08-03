@@ -1,5 +1,6 @@
 class = require 'libs.30log'
 anim8 = require 'libs.anim8'
+HC = require 'libs.HardonCollider'
 
 require 'Constants'
 require 'Player'
@@ -8,6 +9,7 @@ require 'Skeleton'
 
 
 function love.load()
+	Collider = HC(100,onCollide,collisionStop)
 	playerImage = love.graphics.newImage("img/betty_0.png")
 	skeletonImage = love.graphics.newImage("img/zombie_n_skeleton2.adjusted.png")
 
@@ -28,24 +30,35 @@ function love.load()
 end
 
 function love.update(dt)
-	
+	-- Movement
 	local anyKeyPressed = false
 	if up and player.y > 0 then
-		player:move(0,-playerSpeed)
+		player:move(0,-Const.Player.Speed*dt)
 		anyKeyPressed = true
 	end
 	if left and player.x > 0 then
-		player:move(-playerSpeed,0)
+		player:move(-Const.Player.Speed*dt,0)
 		anyKeyPressed = true
 	end
-	if down and player.y < love.graphics.getHeight() - playerSpriteSize then
-		player:move(0,playerSpeed)
+	if down and player.y < love.graphics.getHeight() - Const.Player.SpriteSize then
+		player:move(0,Const.Player.Speed*dt)
 		anyKeyPressed = true
 	end
-	if right and player.x < love.graphics.getWidth() - playerSpriteSize then
-		player:move(playerSpeed,0)
+	if right and player.x < love.graphics.getWidth() - Const.Player.SpriteSize then
+		player:move(Const.Player.Speed*dt,0)
 		anyKeyPressed = true
 	end
+	
+	-- Update Entities
+	player:update(dt)
+	
+	for key,value in ipairs(enemies) do
+		value:update(dt)
+	end
+	
+	
+	-- Collision detection
+	Collider:update(dt)
 	
 	-- Player walkanimation
 	if anyKeyPressed then
@@ -63,7 +76,7 @@ function love.update(dt)
 	
 	for key,value in ipairs(enemies) do
 		local width,height = value:getRealSize()
-		if player.y + playerSpriteSize > (value.y + height) then
+		if player.y + Const.Player.SpriteSize > (value.y + height) then
 			table.insert(drawUnderPlayer,value)
 		else
 			table.insert(drawOverPlayer,value)
@@ -85,6 +98,7 @@ function love.draw()
 	
 	drawUnderPlayer = nil
 	drawOverPlayer = nil
+	
 end
 
 function love.keypressed(key,unicode)
@@ -124,4 +138,12 @@ function love.keyreleased(key,unicode)
 	if key == "d" then
 		right = false
 	end
+end
+
+function onCollide(dt,shapeA,shapeB)
+
+end
+
+function collisionStop(dt,shapeA,shapeB)
+
 end

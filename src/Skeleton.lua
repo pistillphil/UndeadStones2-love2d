@@ -1,12 +1,13 @@
 Skeleton = Enemy:extends {}
 
 function Skeleton:__init(x,y,image)
-	self.spriteWidth = 32
-	self.spriteHeight = 48
-	self.skeletonAnimationSpeed = 0.4
-	self.scale = 1.3
+	self.spriteWidth = Const.Skeleton.SpriteWidth
+	self.spriteHeight = Const.Skeleton.SpriteHeight
+	self.skeletonAnimationSpeed = Const.Skeleton.AnimationSpeed
+	self.scale = Const.Skeleton.Scale
+	local rect = Collider:addRectangle(x,y,self.spriteWidth*self.scale,self.spriteHeight*self.scale)
 
-	Skeleton.super.__init(self,x,y,image)
+	Skeleton.super.__init(self,x,y,image,rect)
 
 	--Setup Animations
 	self.grid = anim8.newGrid(self.spriteWidth,self.spriteHeight,self.image:getWidth(),self.image:getHeight(),0,16)
@@ -17,4 +18,8 @@ function Skeleton:__init(x,y,image)
 	self.animation.up = anim8.newAnimation(self.grid(4,4,5,4,6,4,5,4),self.skeletonAnimationSpeed)
 
 	self.currentAnimation = self.animation.down
+end
+
+function Skeleton:update(dt)
+	self.rect:moveTo(self.x + self.spriteWidth/2,self.y + self.spriteHeight/2)
 end
