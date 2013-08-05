@@ -6,26 +6,36 @@ require 'Constants'
 require 'Player'
 require 'Enemy'
 require 'Skeleton'
+require 'Goblin'
 
 
 function love.load()
 	shotHitboxes = false
 	Collider = HC(100,onCollide,collisionStop)
 	playerImage = love.graphics.newImage("img/betty_0.png")
-	skeletonImage = love.graphics.newImage("img/zombie_n_skeleton2.adjusted.png")
+	skeletonNGoblinImage = love.graphics.newImage("img/zombie_n_skeleton2.adjusted.png")
 
 	player = Player:new(100,100,playerImage)
 	enemies = {}
 	
 	-- test stuff
-	table.insert(enemies,Skeleton:new(300,300,skeletonImage))
-	table.insert(enemies,Skeleton:new(400,300,skeletonImage))
-	table.insert(enemies,Skeleton:new(500,300,skeletonImage))
-	table.insert(enemies,Skeleton:new(600,300,skeletonImage))
+	table.insert(enemies,Skeleton:new(300,300,skeletonNGoblinImage))
+	table.insert(enemies,Skeleton:new(400,300,skeletonNGoblinImage))
+	table.insert(enemies,Skeleton:new(500,300,skeletonNGoblinImage))
+	table.insert(enemies,Skeleton:new(600,300,skeletonNGoblinImage))
 	
 	enemies[2].currentAnimation = enemies[2].animation.left
 	enemies[3].currentAnimation = enemies[3].animation.up
 	enemies[4].currentAnimation = enemies[4].animation.right
+	
+	table.insert(enemies,Goblin:new(300,400,skeletonNGoblinImage))
+	table.insert(enemies,Goblin:new(400,400,skeletonNGoblinImage))
+	table.insert(enemies,Goblin:new(500,400,skeletonNGoblinImage))
+	table.insert(enemies,Goblin:new(600,400,skeletonNGoblinImage))
+	
+	enemies[6].currentAnimation = enemies[6].animation.left
+	enemies[7].currentAnimation = enemies[7].animation.up
+	enemies[8].currentAnimation = enemies[8].animation.right
 	
 	-- test end
 end

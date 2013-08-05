@@ -16,11 +16,24 @@ Const =
 	{
 		SpriteWidth = 32,
 		SpriteHeight = 48,
-		AnimationSpeed = 0.35,
+		AnimationSpeed = 0.6,
 		VerticalSpriteOffset = 16,
 		Scale = 1.27,
-		HorizontalHitboxScale = 0.8,
+		HorizontalHitboxScale = 0.7,
 		VerticalHitboxScale = 1.1
+	},
+	
+	Goblin =
+	{
+	SpriteWidth = 32,
+	SpriteHeight = 48,
+	VerticalSpriteCut = 8,
+	AnimationSpeed = 0.2,
+	VerticalSpriteOffset = 16 + 8,
+	Scale = 0.9,
+	HorizontalHitboxScale = 0.5,
+	VerticalHitboxScale = 0.80
+	
 	}
 
 }
