@@ -9,6 +9,7 @@ require 'Skeleton'
 
 
 function love.load()
+	shotHitboxes = false
 	Collider = HC(100,onCollide,collisionStop)
 	playerImage = love.graphics.newImage("img/betty_0.png")
 	skeletonImage = love.graphics.newImage("img/zombie_n_skeleton2.adjusted.png")
@@ -86,6 +87,15 @@ function love.update(dt)
 end
 
 function love.draw()
+
+	if showHitboxes then
+		player.rect:draw('fill')
+		for key, enemy in ipairs(enemies)do
+			enemy.rect:draw('fill')
+			
+		end
+	end
+	
 	for key,value in ipairs(drawUnderPlayer) do
 		value.currentAnimation:draw(value.image,value.x,value.y,0,value.scale,value.scale)
 	end
@@ -122,6 +132,8 @@ function love.keypressed(key,unicode)
 		love.event.push("quit")
 	elseif key == "f3" then
 		love.graphics.toggleFullscreen()
+	elseif key =="f2" then
+		showHitboxes = not showHitboxes
 	end
 end
 

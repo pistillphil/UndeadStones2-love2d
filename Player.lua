@@ -7,7 +7,7 @@ function Player:__init(x,y,image)
 	self.spriteHeight = Const.Player.SpriteSize
 	self.image = image
 	self.animation = {}
-	self.rect = Collider:addRectangle(self.x,self.y,Const.Player.SpriteSize,Const.Player.SpriteSize)
+	self.rect = Collider:addCircle(-100,-100,Const.Player.SpriteSize/2 * Const.Player.HitboxScale)
 
 	--Setup Animations
 	self.grid = anim8.newGrid(Const.Player.SpriteSize,Const.Player.SpriteSize,self.image:getWidth(),self.image:getHeight(),Const.Player.HorizontalSpriteOffset,Const.Player.VerticalSpriteOffset,Const.Player.SpriteBorders)
@@ -36,5 +36,5 @@ function Player:move(x,y)
 end
 
 function Player:update(dt)
-	self.rect:moveTo(self.x + self.spriteWidth/2,self.y + self.spriteHeight/2)
+	self.rect:moveTo(self.x + self.spriteWidth/2,self.y + self.spriteHeight/2 - 1)
 end

@@ -5,7 +5,7 @@ function Skeleton:__init(x,y,image)
 	self.spriteHeight = Const.Skeleton.SpriteHeight
 	self.skeletonAnimationSpeed = Const.Skeleton.AnimationSpeed
 	self.scale = Const.Skeleton.Scale
-	local rect = Collider:addRectangle(x,y,self.spriteWidth*self.scale,self.spriteHeight*self.scale)
+	local rect = Collider:addRectangle(-200,-200,self.spriteWidth*Const.Skeleton.HorizontalHitboxScale,self.spriteHeight*Const.Skeleton.VerticalHitboxScale)
 
 	Skeleton.super.__init(self,x,y,image,rect)
 
@@ -21,5 +21,5 @@ function Skeleton:__init(x,y,image)
 end
 
 function Skeleton:update(dt)
-	self.rect:moveTo(self.x + self.spriteWidth/2,self.y + self.spriteHeight/2)
+	self.rect:moveTo(self.x + self.spriteWidth/2*self.scale,self.y + self.spriteHeight/2*self.scale)
 end
