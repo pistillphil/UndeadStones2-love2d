@@ -2,6 +2,8 @@ Const =
 {
 	Player = 
 	{
+		Hitpoints = 5,
+		TimeInvincible = 0.8,
 		Speed = 200,
 		AnimationSpeed = 0.3,
 		SpriteSize = 36,

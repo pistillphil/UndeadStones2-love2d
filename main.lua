@@ -119,6 +119,13 @@ function love.draw()
 	drawUnderPlayer = nil
 	drawOverPlayer = nil
 	
+	-- Debug Stuff
+	love.graphics.print("HP: " .. player.hp,0,0)
+	love.graphics.print("FPS: " .. love.timer.getFPS(),300,0)
+	love.graphics.print("Time: " .. love.timer.getTime(),400,0)
+	if player.hitTime ~= nil then
+		love.graphics.print("TimeSinceHit: " .. love.timer.getTime() - player.hitTime,500,0)
+	end
 end
 
 function love.keypressed(key,unicode)
@@ -163,7 +170,11 @@ function love.keyreleased(key,unicode)
 end
 
 function onCollide(dt,shapeA,shapeB)
-
+	if shapeA.entity == player then
+		player:collide(shapeB)
+	elseif shapeB.entity == player then
+		player:collide(shapeA)
+	end
 end
 
 function collisionStop(dt,shapeA,shapeB)

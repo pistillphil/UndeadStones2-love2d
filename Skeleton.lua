@@ -1,4 +1,5 @@
 Skeleton = Enemy:extends {}
+Skeleton.__name = "Skeleton"
 
 function Skeleton:__init(x,y,image)
 	self.spriteWidth = Const.Skeleton.SpriteWidth

@@ -1,6 +1,8 @@
 Player = class {}
+Player.__name = "Player"
 
 function Player:__init(x,y,image)
+	self.hp = Const.Player.Hitpoints
 	self.x = x
 	self.y = y
 	self.spriteWidth = Const.Player.SpriteSize
@@ -8,6 +10,7 @@ function Player:__init(x,y,image)
 	self.image = image
 	self.animation = {}
 	self.rect = Collider:addCircle(-100,-100,Const.Player.SpriteSize/2 * Const.Player.HitboxScale)
+	self.rect.entity = self
 
 	--Setup Animations
 	self.grid = anim8.newGrid(Const.Player.SpriteSize,Const.Player.SpriteSize,self.image:getWidth(),self.image:getHeight(),Const.Player.HorizontalSpriteOffset,Const.Player.VerticalSpriteOffset,Const.Player.SpriteBorders)
@@ -37,4 +40,21 @@ end
 
 function Player:update(dt)
 	self.rect:moveTo(self.x + self.spriteWidth/2,self.y + self.spriteHeight/2 - 1)
+	
+	if self.hitTime ~= nil then
+		if love.timer.getTime() - self.hitTime > Const.Player.TimeInvincible then
+			Collider:setSolid(self.rect)
+			self.hitTime = nil
+		end
+	end
+end
+
+function Player:collide(shape)
+	local otherEntity = shape.entity
+	if otherEntity.type == Enemy.type then
+		self.hp = self.hp - 1
+		Collider:setGhost(self.rect)
+		self.hitTime = love.timer.getTime() 
+		
+	end
 end

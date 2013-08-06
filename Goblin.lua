@@ -1,4 +1,5 @@
 Goblin = Enemy:extends {}
+Goblin.__name = "Goblin"
 
 function Goblin:__init(x,y,image)
 	self.spriteWidth = Const.Goblin.SpriteWidth

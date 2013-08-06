@@ -1,4 +1,6 @@
 Enemy = class {}
+Enemy.__name = "Enemy"
+Enemy.type = "Enemy"
 
 function Enemy.__init(instance,x,y,image,rect)
 	instance.x = x
@@ -6,6 +8,7 @@ function Enemy.__init(instance,x,y,image,rect)
 	
 	instance.image = image
 	instance.rect = rect
+	instance.rect.entity = instance
 	instance.animation = {}
 end
 
