@@ -4,7 +4,7 @@ Const =
 	{
 		Hitpoints = 5,
 		TimeInvincible = 0.8,
-		Speed = 200,
+		Speed = 3,
 		AnimationSpeed = 0.3,
 		SpriteSize = 36,
 		HorizontalSpriteOffset = -6,
@@ -36,6 +36,18 @@ Const =
 	HorizontalHitboxScale = 0.5,
 	VerticalHitboxScale = 0.80
 	
+	},
+	
+	Spell =
+	{
+		Stoner =
+		{
+			SpriteSize = 40,
+			HitboxSize = 32,
+			AnimationSpeed = 0.1,
+			Speed = 5.5,
+			Frequency = 0.6
+		}
 	}
 
 }

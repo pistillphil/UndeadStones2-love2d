@@ -20,6 +20,7 @@ function Player:__init(x,y,image)
 	self.animation.right = anim8.newAnimation(self.grid(4,1,4,2,4,3,4,4),Const.Player.AnimationSpeed)
 
 	self.currentAnimation = self.animation.down
+	self.currentSpell = "Stoner"
 end
 
 function Player:move(x,y)

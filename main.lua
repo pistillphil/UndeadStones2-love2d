@@ -7,16 +7,20 @@ require 'Player'
 require 'Enemy'
 require 'Skeleton'
 require 'Goblin'
+require 'spells.Stoner'
 
 
 function love.load()
 	shotHitboxes = false
 	Collider = HC(100,onCollide,collisionStop)
+	castPossible = true
 	playerImage = love.graphics.newImage("img/betty_0.png")
 	skeletonNGoblinImage = love.graphics.newImage("img/zombie_n_skeleton2.adjusted.png")
+	stonerImage = love.graphics.newImage("img/plasmaball.png")
 
 	player = Player:new(100,100,playerImage)
 	enemies = {}
+	spells = {}
 	
 	-- test stuff
 	table.insert(enemies,Skeleton:new(300,300,skeletonNGoblinImage))
@@ -44,26 +48,33 @@ function love.update(dt)
 	-- Movement
 	local anyKeyPressed = false
 	if up and player.y > 0 then
-		player:move(0,-Const.Player.Speed*dt)
+		player:move(0,-Const.Player.Speed)
 		anyKeyPressed = true
 	end
 	if left and player.x > 0 then
-		player:move(-Const.Player.Speed*dt,0)
+		player:move(-Const.Player.Speed,0)
 		anyKeyPressed = true
 	end
 	if down and player.y < love.graphics.getHeight() - Const.Player.SpriteSize then
-		player:move(0,Const.Player.Speed*dt)
+		player:move(0,Const.Player.Speed)
 		anyKeyPressed = true
 	end
 	if right and player.x < love.graphics.getWidth() - Const.Player.SpriteSize then
-		player:move(Const.Player.Speed*dt,0)
+		player:move(Const.Player.Speed,0)
 		anyKeyPressed = true
 	end
+	
+	-- cast spells
+	cast()
 	
 	-- Update Entities
 	player:update(dt)
 	
 	for key,value in ipairs(enemies) do
+		value:update(dt)
+	end
+	
+	for key,value in ipairs(spells) do
 		value:update(dt)
 	end
 	
@@ -79,6 +90,11 @@ function love.update(dt)
 	-- enemy walkanimation 
 	for key,value in ipairs(enemies) do
 		value.currentAnimation:update(dt)
+	end
+	
+	-- spell animation
+	for key,value in ipairs(spells) do
+		value.animation:update(dt)
 	end
 	
 	-- Determine draw order
@@ -100,9 +116,11 @@ function love.draw()
 
 	if showHitboxes then
 		player.rect:draw('fill')
-		for key, enemy in ipairs(enemies)do
-			enemy.rect:draw('fill')
-			
+		for key, value in ipairs(enemies) do
+			value.rect:draw('fill')	
+		end
+		for key,value in ipairs(spells) do
+			--value.rect:draw('fill')
 		end
 	end
 	
@@ -116,6 +134,10 @@ function love.draw()
 		value.currentAnimation:draw(value.image,value.x,value.y,0,value.scale,value.scale)
 	end
 	
+	for key,value in ipairs(spells) do
+		value.animation:draw(value.image,value.x,value.y,0,value.scale,value.scale)
+	end
+	
 	drawUnderPlayer = nil
 	drawOverPlayer = nil
 	
@@ -125,6 +147,9 @@ function love.draw()
 	love.graphics.print("Time: " .. love.timer.getTime(),400,0)
 	if player.hitTime ~= nil then
 		love.graphics.print("TimeSinceHit: " .. love.timer.getTime() - player.hitTime,500,0)
+	end
+	if lastCast ~= nil then
+		love.graphics.print("TimeSinceCast: " .. love.timer.getTime() - lastCast,500,10)
 	end
 end
 
@@ -142,6 +167,17 @@ function love.keypressed(key,unicode)
 	end
 	if key == "d" then
 		right = true
+	end
+	
+	-- player spells
+	if key == "up" then
+		castUp = true
+	elseif key == "left" then
+		castLeft = true
+	elseif key == "down" then
+		castDown = true
+	elseif key == "right" then
+		castRight = true
 	end
 	
 	--misc
@@ -167,6 +203,17 @@ function love.keyreleased(key,unicode)
 	if key == "d" then
 		right = false
 	end
+
+-- player spells
+	if key == "up" then
+		castUp = false
+	elseif key == "left" then
+		castLeft = false
+	elseif key == "down" then
+		castDown = false
+	elseif key == "right" then
+		castRight = false
+	end
 end
 
 function onCollide(dt,shapeA,shapeB)
@@ -179,4 +226,32 @@ end
 
 function collisionStop(dt,shapeA,shapeB)
 
+end
+
+function cast()
+	if lastCast ~= nil and love.timer.getTime() - lastCast > Const.Spell.Stoner.Frequency then
+		castPossible = true
+		lastCast = nil
+	end
+	if castPossible then
+		if player.currentSpell == "Stoner" then
+			if castUp then
+				table.insert(spells,Stoner:new(player.x,player.y,{x = 0,y = -1},stonerImage))
+				lastCast = love.timer.getTime()
+				castPossible = false
+			elseif castLeft then
+				table.insert(spells,Stoner:new(player.x,player.y,{x = -1,y = 0},stonerImage))
+				lastCast = love.timer.getTime()
+				castPossible = false
+			elseif castDown then
+				table.insert(spells,Stoner:new(player.x,player.y,{x = 0,y = 1},stonerImage))
+				lastCast = love.timer.getTime()
+				castPossible = false
+			elseif castRight then
+				table.insert(spells,Stoner:new(player.x,player.y,{x = 1,y = 0},stonerImage))
+				lastCast = love.timer.getTime()
+				castPossible = false
+			end
+		end
+	end
 end
