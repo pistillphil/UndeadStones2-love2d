@@ -27,14 +27,14 @@ Const =
 	
 	Goblin =
 	{
-	SpriteWidth = 32,
-	SpriteHeight = 48,
-	VerticalSpriteCut = 8,
-	AnimationSpeed = 0.2,
-	VerticalSpriteOffset = 16 + 8,
-	Scale = 0.9,
-	HorizontalHitboxScale = 0.5,
-	VerticalHitboxScale = 0.80
+		SpriteWidth = 32,
+		SpriteHeight = 48,
+		VerticalSpriteCut = 8,
+		AnimationSpeed = 0.2,
+		VerticalSpriteOffset = 16 + 8,
+		Scale = 0.9,
+		HorizontalHitboxScale = 0.5,
+		VerticalHitboxScale = 0.80
 	
 	},
 	
@@ -42,11 +42,12 @@ Const =
 	{
 		Stoner =
 		{
-			SpriteSize = 40,
-			HitboxSize = 32,
+			SpriteSize = 32,
+			HitboxSize = 24,
 			AnimationSpeed = 0.1,
 			Speed = 5.5,
-			Frequency = 0.6
+			Frequency = 0.6,
+			Scale = 1.1
 		}
 	}
 

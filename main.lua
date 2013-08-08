@@ -8,6 +8,7 @@ require 'Enemy'
 require 'Skeleton'
 require 'Goblin'
 require 'spells.Stoner'
+require 'spells.Manager'
 
 
 function love.load()
@@ -109,7 +110,9 @@ function love.update(dt)
 			table.insert(drawOverPlayer,value)
 		end
 	end
-
+	
+	SpellManager.removeUnneded(spells)
+	
 end
 
 function love.draw()
@@ -120,7 +123,7 @@ function love.draw()
 			value.rect:draw('fill')	
 		end
 		for key,value in ipairs(spells) do
-			--value.rect:draw('fill')
+			value.rect:draw('fill')
 		end
 	end
 	
@@ -145,11 +148,13 @@ function love.draw()
 	love.graphics.print("HP: " .. player.hp,0,0)
 	love.graphics.print("FPS: " .. love.timer.getFPS(),300,0)
 	love.graphics.print("Time: " .. love.timer.getTime(),400,0)
-	if player.hitTime ~= nil then
+	love.graphics.print("NumberOfSpells: " .. #spells,500,36)
+	love.graphics.print("NumberOfEnemies: " .. #enemies,500,24)
+	if player.hitTime then
 		love.graphics.print("TimeSinceHit: " .. love.timer.getTime() - player.hitTime,500,0)
 	end
-	if lastCast ~= nil then
-		love.graphics.print("TimeSinceCast: " .. love.timer.getTime() - lastCast,500,10)
+	if lastCast  then
+		love.graphics.print("TimeSinceCast: " .. love.timer.getTime() - lastCast,500,12)
 	end
 end
 
