@@ -4,7 +4,7 @@ Const =
 	{
 		Hitpoints = 5,
 		TimeInvincible = 0.8,
-		Speed = 3,
+		Speed = 210,
 		AnimationSpeed = 0.3,
 		SpriteSize = 36,
 		HorizontalSpriteOffset = -6,
@@ -45,7 +45,7 @@ Const =
 			SpriteSize = 32,
 			HitboxSize = 24,
 			AnimationSpeed = 0.1,
-			Speed = 5.5,
+			Speed = 366,
 			Frequency = 0.6,
 			Scale = 1.1
 		}

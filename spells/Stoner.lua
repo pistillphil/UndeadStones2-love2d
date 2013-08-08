@@ -21,13 +21,13 @@ end
 
 function Stoner:update(dt)
 	if self.velocity.x == 1 then
-		self.x = self.x + self.speed
+		self.x = self.x + self.speed * dt
 	elseif self.velocity.x == -1 then
-		self.x = self.x - self.speed
+		self.x = self.x - self.speed * dt
 	elseif self.velocity.y == 1 then
-		self.y = self.y + self.speed
+		self.y = self.y + self.speed * dt
 	elseif self.velocity.y == -1 then
-		self.y = self.y - self.speed
+		self.y = self.y - self.speed * dt
 	end
 	
 	self.rect:moveTo(self.x + self.spriteSize/2 * self.scale ,self.y + self.spriteSize/2 * self.scale)

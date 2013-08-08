@@ -49,19 +49,19 @@ function love.update(dt)
 	-- Movement
 	local anyKeyPressed = false
 	if up and player.y > 0 then
-		player:move(0,-Const.Player.Speed)
+		player:move(0,-Const.Player.Speed * dt)
 		anyKeyPressed = true
 	end
 	if left and player.x > 0 then
-		player:move(-Const.Player.Speed,0)
+		player:move(-Const.Player.Speed * dt,0)
 		anyKeyPressed = true
 	end
 	if down and player.y < love.graphics.getHeight() - Const.Player.SpriteSize then
-		player:move(0,Const.Player.Speed)
+		player:move(0,Const.Player.Speed * dt)
 		anyKeyPressed = true
 	end
 	if right and player.x < love.graphics.getWidth() - Const.Player.SpriteSize then
-		player:move(Const.Player.Speed,0)
+		player:move(Const.Player.Speed * dt,0)
 		anyKeyPressed = true
 	end
 	
